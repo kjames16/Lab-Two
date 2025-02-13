@@ -5,7 +5,7 @@ public class Event implements Comparable<Event> {
     private String name;
     private LocalDateTime dateTime;
 
-    public void Event(String event, LocalDateTime dateTime) {
+    public Event(String event, LocalDateTime dateTime) {
         this.name = event;
         this.dateTime = dateTime;
     }
