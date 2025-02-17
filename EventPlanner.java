@@ -17,13 +17,14 @@ public class EventPlanner {
 
         LocalDateTime startTime = LocalDateTime.now();
         frame.getContentPane().add(eventListPanel);
-        addDefaultEvents(eventListPanel);
+
+
 
         frame.setVisible(true);
 
     }
 
-    static void addDefaultEvents(EventListPanel events) {
+     public static void addDefaultEvents(EventListPanel events) {
         events.add(new EventPanel(lastDeadline));
 
     }
