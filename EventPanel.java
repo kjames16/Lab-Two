@@ -13,7 +13,7 @@ public class EventPanel extends JPanel {
 
         this.event = event;
 
-        this.setPreferredSize(new Dimension(125, 100));
+        this.setPreferredSize(new Dimension(125, 150));
         this.setBackground(BLUE);
 
         //Button that completes the event(sets complete variable to true)
@@ -56,8 +56,8 @@ public class EventPanel extends JPanel {
         g.drawString(event.getName(),1,50);
         g.drawString(event.getDateTime().toString(),1,75);
         if(event instanceof Meeting meeting){
-            g.drawString(meeting.getEndDateTime().toString(),1,85);
-            g.drawString(meeting.getLocation(),1,95);
+            g.drawString(meeting.getEndDateTime().toString(),1,95);
+            g.drawString(meeting.getLocation(),1,125);
         }
 
 

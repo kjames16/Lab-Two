@@ -11,7 +11,7 @@ public class AddEventModal extends JFrame {
     private Event event;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
-    boolean ismeeting = false;
+
 
 
 
@@ -34,17 +34,21 @@ public class AddEventModal extends JFrame {
 
 
         meetingButton.addActionListener(e -> {
-            ismeeting = true;
 
-            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField()};
+
+            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField(),
+                                        new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField()};
             JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),
-                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"), new JLabel("Minute")};
+                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"),
+                    new JLabel("Minute"), new JLabel("End_Year"), new JLabel("End_Month"),
+                    new JLabel("End_Day"), new JLabel("End_Hour"), new JLabel("End_Minute"),
+            new JLabel("Location")};
             int T_x = 150;
             int T_y = 100;
             int L_x = 100;
             int L_y = 100;
 
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 12; i++) {
                 textFields[i].setBounds(T_x, T_y, 100, 30);
                 labels[i].setBounds(L_x, L_y, 100, 30);
 
@@ -66,17 +70,32 @@ public class AddEventModal extends JFrame {
             repaint();
 
             addButton.addActionListener(l ->{
-                event = new Event("dummy", LocalDateTime.of(1,1,1,1,1));
+                event = new Meeting("dummy", LocalDateTime.of(1,1,1,1,1),LocalDateTime.of(1,1,1,1,1),"dummy");
                 event.setName(textFields[0].getText());
                 event.setDateTime(LocalDateTime.of(Integer.parseInt(textFields[1].getText()),Integer.parseInt(textFields[2].getText()),Integer.parseInt(textFields[3].getText()),
                         Integer.parseInt(textFields[4].getText()),Integer.parseInt(textFields[5].getText())));
+                if(event instanceof Meeting meeting) {
+                    meeting.setEndDateTime(LocalDateTime.of(Integer.parseInt(textFields[6].getText()),Integer.parseInt(textFields[7].getText()),Integer.parseInt(textFields[8].getText()),
+                            Integer.parseInt(textFields[9].getText()),Integer.parseInt(textFields[10].getText())));
+                    meeting.setLocation(textFields[11].getText());
+                }
 
-                sourcePanel.removeAll();
+                for (EventPanel eventPanels : sourcePanel.getPanels())
+                {
+                    sourcePanel.getDisplayPanel().remove(eventPanels);
+                    sourcePanel.revalidate();
+                    sourcePanel.repaint();
+                }
+
+
 
                 sourcePanel.getEvents().add(event);
+
+                sourcePanel.clearPanels();
                 for(Event events : sourcePanel.getEvents())
                 {
                     EventPanel eventPanel = new EventPanel(events);
+                    sourcePanel.getPanels().add(eventPanel);
                     sourcePanel.getDisplayPanel().add(eventPanel);
                 }
 
@@ -89,6 +108,9 @@ public class AddEventModal extends JFrame {
         });
 
         deadlineButton.addActionListener(e -> {
+
+
+
 
             JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField()};
             JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),

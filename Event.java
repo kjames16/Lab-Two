@@ -4,6 +4,7 @@ public class Event implements Comparable<Event> {
 
     private String name;
     private LocalDateTime dateTime;
+    private boolean filterd = false;
 
     public Event(String event, LocalDateTime dateTime) {
         this.name = event;
@@ -32,6 +33,16 @@ public class Event implements Comparable<Event> {
     // 0 if they have the same date
     public int compareTo(Event e) {
         return this.dateTime.compareTo(e.dateTime);
+    }
+
+    public boolean isFiltered() {
+        return this.filterd;
+    }
+    public void filter() {
+        this.filterd = true;
+    }
+    public void unfilter() {
+        this.filterd = false;
     }
 
 }
