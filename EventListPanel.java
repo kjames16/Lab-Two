@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -8,11 +9,13 @@ public class EventListPanel extends JPanel {
    LocalDateTime deadline = LocalDateTime.of(2024, 12, 7, 17, 0);
      String lastDeadlineName = "Last Deadline";
      Deadline lastDeadline = new Deadline(lastDeadlineName, deadline );
+     String[] sort = {"Name", "Date"};
 
-    private ArrayList<Event> events;
+    private ArrayList<Event> events = new ArrayList<>();
+    private ArrayList<EventPanel> panels = new ArrayList<>();
     private JPanel controlPanel = new JPanel();
     private JPanel displayPanel = new JPanel();
-    private JComboBox sortDropDown = new JComboBox();
+    private JComboBox sortDropDown = new JComboBox(sort);
     private JCheckBox filterDisplay;
     private JButton addEventButton = new JButton("Add Event");
     public EventListPanel() {
@@ -38,15 +41,56 @@ public class EventListPanel extends JPanel {
         displayPanel.setBackground(Color.RED);
         displayPanel.add(sortDropDown);
         //default event
-        displayPanel.add(new EventPanel(lastDeadline));
+        EventPanel ep = new EventPanel(lastDeadline);
+        displayPanel.add(ep);
+        panels.add(ep);
 
         this.add(displayPanel);
 
-        //Create the array of events
-        //have the button add to that array
-        //make a function that updates the list panel
-        //       -adds the events from the array then repaints
 
+
+
+
+
+        sortDropDown.setSelectedIndex(0);
+        sortDropDown.addActionListener(e -> {
+            if (sortDropDown.getSelectedIndex() == 1) {
+                for (int i = 0; i < events.size() - 1; i++) {
+                    boolean swapped = false;
+
+                    for (int j = 0; j < events.size() - i - 1; j++) {
+                        if (events.get(j).compareTo(events.get(j + 1)) > 0) {
+                            Event temp = events.get(j);
+                            events.set(j, events.get(j + 1));
+                            events.set(j + 1, temp);
+                            swapped = true;
+                        }
+                    }
+                    if (!swapped) {
+                        break;
+                    }
+                }
+
+            }
+            else{
+                for (int i = 0; i < events.size() - 1; i++) {
+                    boolean swapped = false;
+
+                    for (int j = 0; j < events.size() - i - 1; j++) {
+                        if (events.get(j).getName().compareTo(events.get(j + 1).getName()) > 0) {
+                            Event temp = events.get(j);
+                            events.set(j, events.get(j + 1));
+                            events.set(j + 1, temp);
+                            swapped = true;
+                        }
+                    }
+                    if (!swapped) {
+                        break;
+                    }
+                }
+            }
+
+        });
 
 
 
@@ -55,4 +99,14 @@ public class EventListPanel extends JPanel {
     public JPanel getDisplayPanel() {
         return displayPanel;
     }
+
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public ArrayList<EventPanel> getPanels() {
+        return panels;
+    }
+
+
 }

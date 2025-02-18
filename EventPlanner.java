@@ -27,5 +27,6 @@ public class EventPlanner {
      public static void addDefaultEvents(EventListPanel events) {
         events.add(new EventPanel(lastDeadline));
 
+
     }
 }

@@ -1,15 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class AddEventModal extends JDialog {
+
+
+public class AddEventModal extends JFrame {
 
     private Event event;
     private LocalDateTime start_date;
     private LocalDateTime end_date;
+    boolean ismeeting = false;
 
-    public AddEventModal() {
+
+
+    public AddEventModal(EventListPanel sourcePanel) {
         this.setTitle("Add Event");
         this.setPreferredSize(new Dimension(400, 300));
         this.setLayout(null);
@@ -23,60 +29,141 @@ public class AddEventModal extends JDialog {
         this.add(meetingButton);
         this.add(deadlineButton);
 
+
+
+
+
         meetingButton.addActionListener(e -> {
-            Scanner input = new Scanner(System.in);
-            System.out.print("Name: ");
-            String name = input.nextLine();
-            System.out.println("Start date:");
-            System.out.print("Year: ");
-             int year = input.nextInt();
-            System.out.print("Month: ");
-            int month = input.nextInt();
-            System.out.print("Day: ");
-            int day = input.nextInt();
-            System.out.print("Hour: ");
-            int hour = input.nextInt();
-            System.out.print("Minute: ");
-            int minute = input.nextInt();
-            start_date = LocalDateTime.of(year, month, day, hour, minute);
+            ismeeting = true;
 
-            System.out.println("End date:");
-            System.out.print("Hour: ");
-            hour = input.nextInt();
-            System.out.print("Minute: ");
-            minute = input.nextInt();
-            start_date = LocalDateTime.of(year, month, day, hour, minute);
+            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField()};
+            JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),
+                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"), new JLabel("Minute")};
+            int T_x = 150;
+            int T_y = 100;
+            int L_x = 100;
+            int L_y = 100;
 
-            System.out.print("Location: ");
-            String location = input.nextLine();
+            for (int i = 0; i < 6; i++) {
+                textFields[i].setBounds(T_x, T_y, 100, 30);
+                labels[i].setBounds(L_x, L_y, 100, 30);
 
-            this.event = new Meeting(name, start_date, end_date, location);
+                this.add(textFields[i]);
+                this.add(labels[i]);
+
+                T_y += 50;
+                L_y += 50;
+
+                revalidate();
+                repaint();
+            }
+
+            JButton addButton = new JButton("Add");
+            addButton.setBounds(350, 150, 100, 30);
+            this.add(addButton);
+
+            revalidate();
+            repaint();
+
+            addButton.addActionListener(l ->{
+                event = new Event("dummy", LocalDateTime.of(1,1,1,1,1));
+                event.setName(textFields[0].getText());
+                event.setDateTime(LocalDateTime.of(Integer.parseInt(textFields[1].getText()),Integer.parseInt(textFields[2].getText()),Integer.parseInt(textFields[3].getText()),
+                        Integer.parseInt(textFields[4].getText()),Integer.parseInt(textFields[5].getText())));
+
+                sourcePanel.removeAll();
+
+                sourcePanel.getEvents().add(event);
+                for(Event events : sourcePanel.getEvents())
+                {
+                    EventPanel eventPanel = new EventPanel(events);
+                    sourcePanel.getDisplayPanel().add(eventPanel);
+                }
+
+                sourcePanel.revalidate();
+                sourcePanel.repaint();
+
+            });
 
 
         });
 
         deadlineButton.addActionListener(e -> {
-            Scanner input = new Scanner(System.in);
-            System.out.print("Name: ");
-            String name = input.nextLine();
-            System.out.println("Deadline:");
-            System.out.print("Year: ");
-            int year = input.nextInt();
-            System.out.print("Month: ");
-            int month = input.nextInt();
-            System.out.print("Day: ");
-            int day = input.nextInt();
-            System.out.print("Hour: ");
-            int hour = input.nextInt();
-            System.out.print("Minute: ");
-            int minute = input.nextInt();
-            start_date = LocalDateTime.of(year, month, day, hour, minute);
 
-            this.event = new Deadline(name, start_date);
+            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField()};
+            JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),
+                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"), new JLabel("Minute")};
+            int T_x = 150;
+            int T_y = 100;
+            int L_x = 100;
+            int L_y = 100;
+
+            for (int i = 0; i < 6; i++) {
+                textFields[i].setBounds(T_x, T_y, 100, 30);
+                labels[i].setBounds(L_x, L_y, 100, 30);
+
+                this.add(textFields[i]);
+                this.add(labels[i]);
+
+                T_y += 50;
+                L_y += 50;
+
+                revalidate();
+                repaint();
+            }
+
+            JButton addButton = new JButton("Add");
+            addButton.setBounds(350, 150, 100, 30);
+            this.add(addButton);
+
+            revalidate();
+            repaint();
+
+            addButton.addActionListener(l ->{
+
+                event = new Event("dummy", LocalDateTime.of(1,1,1,1,1));
+                event.setName(textFields[0].getText());
+                event.setDateTime(LocalDateTime.of(Integer.parseInt(textFields[1].getText()),Integer.parseInt(textFields[2].getText()),Integer.parseInt(textFields[3].getText()),
+                        Integer.parseInt(textFields[4].getText()),Integer.parseInt(textFields[5].getText())));
+
+                for (EventPanel eventPanels : sourcePanel.getPanels())
+                {
+                    sourcePanel.remove(eventPanels);
+                    sourcePanel.revalidate();
+                    sourcePanel.repaint();
+                }
+
+
+
+                sourcePanel.getEvents().add(event);
+                sourcePanel.getPanels().add(new EventPanel(event));
+                for(Event events : sourcePanel.getEvents())
+                {
+                    EventPanel eventPanel = new EventPanel(events);
+                    sourcePanel.getDisplayPanel().add(eventPanel);
+                }
+
+                sourcePanel.revalidate();
+                sourcePanel.repaint();
+
+            });
+
+
+
+
+
+
+
+
+
         });
+
+
+
+
     }
 
-    public Event getEvent() {
-        return event;
-    }
+
+
+
 }
