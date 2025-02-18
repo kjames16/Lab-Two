@@ -71,6 +71,24 @@ public class EventListPanel extends JPanel {
                     }
                 }
 
+                for (EventPanel eventPanels : panels)
+                {
+                    displayPanel.remove(eventPanels);
+                    displayPanel.revalidate();
+                    displayPanel.repaint();
+                }
+                clearPanels();
+                for(Event ev : events)
+                {
+                    EventPanel eventPanel = new EventPanel(ev);
+                    panels.add(eventPanel);
+                    displayPanel.add(eventPanel);
+
+                }
+
+                displayPanel.revalidate();
+                displayPanel.repaint();
+
             }
             else{
                 for (int i = 0; i < events.size() - 1; i++) {
@@ -88,6 +106,24 @@ public class EventListPanel extends JPanel {
                         break;
                     }
                 }
+
+                for (EventPanel eventPanels : panels)
+                {
+                    displayPanel.remove(eventPanels);
+                    displayPanel.revalidate();
+                    displayPanel.repaint();
+                }
+                clearPanels();
+                for(Event ev : events)
+                {
+                    EventPanel eventPanel = new EventPanel(ev);
+                    panels.add(eventPanel);
+                    displayPanel.add(eventPanel);
+
+                }
+
+                displayPanel.revalidate();
+                displayPanel.repaint();
             }
 
         });
@@ -106,6 +142,15 @@ public class EventListPanel extends JPanel {
 
     public ArrayList<EventPanel> getPanels() {
         return panels;
+    }
+
+    public void clearPanels() {
+        for (int i = 0; i < panels.size(); i++) {
+            panels.remove(panels.get(i));
+        }
+
+
+
     }
 
 

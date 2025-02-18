@@ -10,18 +10,8 @@ public class EventPanel extends JPanel {
     private final Event event;
 
     public EventPanel(Event event) {
-       // if (ismeeting) {
-             //Meeting meeting = new Event("dummy", LocalDateTime.of(1,1,1,1,1),LocalDateTime.of(1,1,1,1,1),"dummy");
-             //event = meeting;
 
-
-
-
-      //  }
-       // else{
-            this.event = event;
-       // }
-
+        this.event = event;
 
         this.setPreferredSize(new Dimension(125, 100));
         this.setBackground(BLUE);
@@ -30,15 +20,46 @@ public class EventPanel extends JPanel {
         JButton completeButton = new JButton("Complete");
 
         this.add(completeButton);
+        completeButton.addActionListener(e -> {
+            if(event instanceof Meeting meeting) {
+                meeting.complete();
+                this.setBackground(Color.GREEN);
+                revalidate();
+                repaint();
+            }
+            if(event instanceof Deadline deadline) {
+                deadline.complete();
+                this.setBackground(Color.GREEN);
+                revalidate();
+                repaint();
+            }
+        });
 
-
+        if(event instanceof Meeting meeting) {
+            if(meeting.isComplete()) {
+                this.setBackground(Color.GREEN);
+                revalidate();
+                repaint();
+            }
+        }
+        if(event instanceof Deadline deadline) {
+            if(deadline.isComplete()) {
+                this.setBackground(Color.GREEN);
+                revalidate();
+                repaint();
+            }
+        }
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawString(event.getName(),1,50);
         g.drawString(event.getDateTime().toString(),1,75);
-        //g.drawString(event.get)
+        if(event instanceof Meeting meeting){
+            g.drawString(meeting.getEndDateTime().toString(),1,85);
+            g.drawString(meeting.getLocation(),1,95);
+        }
+
 
 
     }

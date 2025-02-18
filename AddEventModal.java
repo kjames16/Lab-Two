@@ -121,25 +121,27 @@ public class AddEventModal extends JFrame {
 
             addButton.addActionListener(l ->{
 
-                event = new Event("dummy", LocalDateTime.of(1,1,1,1,1));
+                event = new Deadline("dummy", LocalDateTime.of(1,1,1,1,1));
                 event.setName(textFields[0].getText());
                 event.setDateTime(LocalDateTime.of(Integer.parseInt(textFields[1].getText()),Integer.parseInt(textFields[2].getText()),Integer.parseInt(textFields[3].getText()),
                         Integer.parseInt(textFields[4].getText()),Integer.parseInt(textFields[5].getText())));
 
                 for (EventPanel eventPanels : sourcePanel.getPanels())
                 {
-                    sourcePanel.remove(eventPanels);
+                    sourcePanel.getDisplayPanel().remove(eventPanels);
                     sourcePanel.revalidate();
                     sourcePanel.repaint();
                 }
 
-
+                    //EventPanel eventPanel = new EventPanel(event);
 
                 sourcePanel.getEvents().add(event);
-                sourcePanel.getPanels().add(new EventPanel(event));
+
+                sourcePanel.clearPanels();
                 for(Event events : sourcePanel.getEvents())
                 {
                     EventPanel eventPanel = new EventPanel(events);
+                    sourcePanel.getPanels().add(eventPanel);
                     sourcePanel.getDisplayPanel().add(eventPanel);
                 }
 
