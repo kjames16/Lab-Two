@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class AddEventModal extends JFrame {
 
     private Event event;
+    private Deadline deadline = new Deadline("dummy", LocalDateTime.now());
+    private Meeting meeting = new Meeting("dummy", LocalDateTime.now(), LocalDateTime.now(), "here");
     private LocalDateTime start_date;
     private LocalDateTime end_date;
 
@@ -36,13 +38,9 @@ public class AddEventModal extends JFrame {
         meetingButton.addActionListener(e -> {
 
 
-            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField(),
-                                        new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField()};
-            JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),
-                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"),
-                    new JLabel("Minute"), new JLabel("End_Year"), new JLabel("End_Month"),
-                    new JLabel("End_Day"), new JLabel("End_Hour"), new JLabel("End_Minute"),
-            new JLabel("Location")};
+            JTextField[] textFields = meeting.getTextFields();
+            JLabel[] labels = meeting.getLabels();
+
             int T_x = 150;
             int T_y = 100;
             int L_x = 100;
@@ -105,9 +103,8 @@ public class AddEventModal extends JFrame {
 
 
 
-            JTextField[] textFields = new JTextField[]{new JTextField(), new JTextField(), new JTextField(), new JTextField(), new JTextField(),new JTextField()};
-            JLabel[] labels = new JLabel[] {new JLabel("Name"), new JLabel("Year"),
-                    new JLabel("Month"), new JLabel("Day"), new JLabel("Hour"), new JLabel("Minute")};
+            JTextField[] textFields = deadline.getTextFields();
+            JLabel[] labels = deadline.getLabels();
             int T_x = 150;
             int T_y = 100;
             int L_x = 100;

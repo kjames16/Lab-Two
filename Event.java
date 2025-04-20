@@ -35,14 +35,8 @@ public class Event implements Comparable<Event> {
         return this.dateTime.compareTo(e.dateTime);
     }
 
-    public boolean isFiltered() {
-        return this.filterd;
-    }
-    public void filter() {
-        this.filterd = true;
-    }
-    public void unfilter() {
-        this.filterd = false;
-    }
+    public boolean isFiltered() {return filterd;}
+    public void filter() {this.filterd = true;}
+    public void unfilter() {this.filterd = false;}
 
 }

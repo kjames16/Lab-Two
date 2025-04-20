@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +45,7 @@ public class EventListPanel extends JPanel {
 
         //displayPanel.setBackground(Color.BLUE);
         displayPanel.setPreferredSize(new Dimension(600, 600));
-        displayPanel.setBackground(Color.RED);
+        displayPanel.setBorder(new LineBorder(Color.BLACK, 5));
 
         //default event
         EventPanel ep = new EventPanel(lastDeadline);
